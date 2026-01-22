@@ -11,8 +11,8 @@ def diff_kinematics(x: np.ndarray, u: np.ndarray):
     vel = (u[0, 0] + u[1, 0]) * stand * d
     if u[1, 0] > 0.5 or u[0, 0] > 0.5:
         message = "Give smaller u_values values. Must be no more than 0.5!"
-        print(message)  # Changed to print to avoid breaking the array flow, or handle error upstream
-        return np.zeros_like(x)  # Return zero velocity to prevent crash if error
+        print(message)
+        return np.zeros_like(x)
     else:
         x_dot = np.array([[omega],
                           [vel * np.cos(x[0, 0])],
