@@ -8,7 +8,7 @@ def run_default_path_planning():
     obstacles = [(0.2, 3, 7), (0.2, 3.7, 6)]
 
     iterations = 300
-    number_of_samples = 5
+    number_of_samples = 200
 
     plot_path_with_obstacles(x_begin, x_finish, iterations, number_of_samples, obstacles)
 
