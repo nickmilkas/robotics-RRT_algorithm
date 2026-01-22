@@ -1,6 +1,6 @@
 # Differential-Drive Modeling and Kinodynamic RRT
 
-This repository contains my solution for **Exercise 1**, which follows the questions from the assignment PDF: (1) differential-drive kinematic modeling, (2) numerical integration (Euler and RK4), and (3) kinodynamic motion planning using a Rapidly-exploring Random Tree (RRT), including an obstacles case.
+This repository contains my solution for an academic assignment based on a set of questions in differential-drive modeling, numerical integration, and kinodynamic RRT planning, including an obstacles case.
 
 ---
 
@@ -69,6 +69,7 @@ end for
 
 return Failure
 ```
+
 ---
 
 ## Initial values used
