@@ -40,13 +40,40 @@ This repository contains my solution for **Exercise 1**, which follows the quest
 The kinodynamic RRT portion is implemented as:
 1. **Sample** a target state (with a small goal bias).
 2. **Nearest**: pick the closest node already in the tree.
-3. **Connect**: sample candidate wheel-speed sequences, simulate forward using RK4, keep the best valid rollout toward the target.
+3. **Connect**: sample candidate wheel-speed sequences, simulate forward using RK4, and select the collision-free rollout endpoint that minimizes a distance-to-sample cost.
 4. **Extend** the tree with the selected new state and its edge.
 5. **Stop** when the goal tolerance is satisfied, otherwise continue until the iteration limit.
 
+### Pseudocode (RRT, as in the assignment)
+
+```text
+Inputs: x_start, x_goal, max_iters
+Output: a collision-free path (or failure)
+
+T ← InitializeTree(x_start)
+
+for i = 1 to max_iters do
+    x_sample   ← SampleState()
+    x_nearest  ← NearestNeighbor(T, x_sample)
+    x_new      ← Connect(x_nearest, x_sample)
+
+    if x_new is valid then
+        AddVertex(T, x_new)
+        AddEdge(T, x_nearest, x_new)
+
+        if GoalReached(x_new, x_goal) then
+            return ExtractPath(T, x_start, x_new)
+        end if
+    end if
+end for
+
+return Failure
+```
 ---
 
 ## Initial values used
+
+State convention: x = [θ, x, y]^T, where θ is in radians and (x, y) are in workspace units.
 
 ### Path planning (with obstacles)
 - **Start state**:  
@@ -94,3 +121,7 @@ Example outputs for the obstacle scenario using the initial values above:
 ![Result 1 — Path with obstacles](pictures/Plot1.png)
 
 ![Result 2 — Path with obstacles](pictures/Plot2.png)
+
+### Comments
+The RRT planner uses random sampling, so two runs can produce different (but still valid) paths and plots. As the number of random samples and iterations increases (conceptually, as sampling → ∞), the planner tends to produce more consistent solutions and similar-looking paths, because it explores the space more thoroughly.
+
